@@ -32,10 +32,11 @@ const createBookmark = async (req, res) => {
   try {
     const { bookmark } = req.body;
 
-    const newBookmark = Bookmark.insertOne(bookmark);
-    const savedBookmark = (await newBookmark).save();
+    const newBookmark = await Bookmark.create(bookmark);
 
-    res.status(201).json({ message: "Bookmark created", bookmark });
+    res
+      .status(201)
+      .json({ message: "Bookmark created", bookmark: newBookmark });
   } catch (error) {
     console.log(`Error occurred while creating a new bookmark: ${error}`);
     res.status(500).json({ error });
@@ -54,8 +55,8 @@ const updateBookmark = async (req, res) => {
     if (!find) return res.status(404).json({ message: "bookmark not found" });
 
     const updated = await Bookmark.findByIdAndUpdate(id, bookmark, {
-      new: true,            // returns the updated document
-      runValidators: true,  // runs schema validations
+      new: true, // returns the updated document
+      runValidators: true, // runs schema validations
     });
 
     res.status(200).json({ message: "Bookmark updated", bookmark: updated });

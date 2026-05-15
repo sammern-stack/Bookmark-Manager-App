@@ -22,6 +22,6 @@ const BookmarkModel = new mongoose.Schema(
   },
 );
 
-const Bookmark = mongoose.model("bookmarks", BookmarkModel, "bookmarks");
+const Bookmark = mongoose.model("bookmark", BookmarkModel);
 
 module.exports = Bookmark
