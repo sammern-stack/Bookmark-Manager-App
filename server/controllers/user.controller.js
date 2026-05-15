@@ -30,7 +30,25 @@ const getUserById = async (req, res) => {
 
 const updateUser = async (req, res) => {};
 
-const deleteUser = async (req, res) => {};
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!isValidId(id))
+      return res.status(400).json({ message: "invalid user ID" });
+
+    const find = await User.findById(id);
+    if (!find) return res.status(404).json({ message: "user not found" });
+
+    await User.findByIdAndDelete(id);
+    const users = await User.find();
+
+    res.status(200).json({ message: "User deleted", users });
+  } catch (error) {
+    console.log(`Error occurred while deleting user: ${error}`);
+    res.status(500).json({ error });
+  }
+};
 
 // Utility: Validate id
 function isValidId(id) {

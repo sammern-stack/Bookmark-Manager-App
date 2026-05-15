@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const UserModel = new mongoose.Schema(
   {
@@ -14,13 +15,19 @@ const UserModel = new mongoose.Schema(
     },
     password: {
       type: String,
-      require: [true, "Password cant be empty"],
+      required: [true, "Password cant be empty"],
     },
   },
   {
     timestamps: true,
   },
 );
+
+// Mongoose Middleware before an action happened
+UserModel.pre("save", async function () {
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
 const User = mongoose.model("user", UserModel);
 
