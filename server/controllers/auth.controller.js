@@ -15,7 +15,7 @@ const signupUser = async (req, res) => {
       .json({ message: "User signup successfully", user: newUser });
   } catch (error) {
     console.log(`Error occurred while user tried to sign up: ${error}`);
-    res.status(500).json({ error });
+    res.status(500).json(error);
   }
 };
 
