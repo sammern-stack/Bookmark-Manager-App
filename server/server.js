@@ -12,6 +12,10 @@ const app = express();
 app.use(express.json());
 app.use(cors(require("./config/cors.json")));
 
+// Routes
+app.use("/bookmark", require("./routes/bookmark.route"));
+
+// Connect to MongoDB and initialize the server
 mongoose
   .connect(MONGODB_URL)
   .then(() => {
