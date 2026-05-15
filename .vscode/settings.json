@@ -1,0 +1,6 @@
+{
+  "editor.fontLigatures": true,
+  "editor.lineNumbers": "relative",
+  "vim.startInInsertMode": true,
+  "vim.autoSwitchInputMethod.enable": true
+}
