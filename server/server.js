@@ -11,6 +11,7 @@ const MONGODB_URL = process.env.MONGODB_URL;
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors(require("./config/cors.json")));
 app.use(cookieParser());
 
