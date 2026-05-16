@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors(require("./config/cors.json")));
+app.use(cookieParser());
 
 // Routes
 app.use("/bookmark", require("./routes/bookmark.route"));

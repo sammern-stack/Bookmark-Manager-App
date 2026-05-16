@@ -24,7 +24,7 @@ const getUserById = async (req, res) => {
     res.status(200).json(find);
   } catch (error) {
     console.log(`Error occurred while fetching user: ${error}`);
-    res.status(500).json({ error });
+    res.status(500).json(error);
   }
 };
 

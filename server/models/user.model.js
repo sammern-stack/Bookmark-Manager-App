@@ -29,6 +29,17 @@ UserModel.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+// Static method to login users
+UserModel.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (!user) throw Error("Incorrect Email");
+
+  const auth = await bcrypt.compare(password, user.password);
+  if (!auth) throw Error("Incorrect Password");
+
+  return user;
+};
+
 const User = mongoose.model("user", UserModel);
 
 module.exports = User;
