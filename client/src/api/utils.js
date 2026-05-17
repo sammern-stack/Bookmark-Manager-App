@@ -65,14 +65,12 @@ api.interceptors.response.use(
 
 // Utility: Generic API call function with error handling
 export const apiCall = async (method, url, data = null, requireAuth = true) => {
+  // Attach data as body or query params depending on method
+  const isGET = method.toUpperCase() === "GET";
+  const dataConfig = data ? (isGET ? { params: data } : { data }) : {};
+
   try {
-    const res = await api({
-      method,
-      url,
-      requireAuth,
-      ...(data &&
-        (method.toUpperCase() === "GET" ? { params: data } : { data })),
-    });
+    const res = await api({ method, url, requireAuth, ...dataConfig });
     return { ok: true, data: res.data };
   } catch (err) {
     console.error(`Error during API call to ${url}:`, err);
