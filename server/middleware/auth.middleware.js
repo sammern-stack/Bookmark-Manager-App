@@ -3,16 +3,17 @@ const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 const authJWT = (req, res, next) => {
-  const token = req.cookies.jwt;
-  if (!token) res.sendStatus(404);
+  const authHeader = req.headers["authorization"];
+  console.log(`authHeader: ${authHeader}`);
+  if (!authHeader) return res.sendStatus(401); // Bearer token
 
-  const verify = jwt.verify(token, ACCESS_TOKEN_SECRET, (error, decodedToken) => {
-    if (error) {
-      console.log(error);
-      res.sendStatus(404);
-    }
+  const token = authHeader.split(" ")[1];
 
-    console.log(decodedToken);
+  const verify = jwt.verify(token, ACCESS_TOKEN_SECRET, (error, decoded) => {
+    if (error) return res.sendStatus(403);
+
+    req.user = decoded._id;
+
     next();
   });
 };

@@ -2,21 +2,21 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
-const MAX_AGE = 3 * 24 * 60 * 60; // 3 days in seconds
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
+const MAX_AGE = 1 * 24 * 60 * 60; // 1 days in seconds
+
+// In production: { maxAge: MAX_AGE * 1000, httpOnly: false, secure: true }
+const cookieOptions = { maxAge: MAX_AGE * 1000, httpOnly: true };
 
 const signupUser = async (req, res) => {
   try {
-    const { user } = req.body;
+    const { username, email, password } = req.body;
 
-    const newUser = await User.create({
-      username: user.username,
-      email: user.email,
-      password: user.password,
-    });
+    const newUser = await User.create({ username, email, password });
 
-    const token = createJWT(newUser._id);
+    const refreshToken = createRefreshToken(newUser._id);
 
-    res.cookie("jwt", token, { maxAge: MAX_AGE * 1000, httpOnly: true });
+    res.cookie("jwt", refreshToken, cookieOptions);
     res
       .status(201)
       .json({ message: "User signup successfully", user: newUser._id });
@@ -28,14 +28,18 @@ const signupUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { info } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.login(info.email, info.password);
+    const user = await User.login(email, password);
 
-    const token = createJWT(user._id);
-    res.cookie("jwt", token, { maxAge: MAX_AGE * 1000, httpOnly: true });
+    const accessToken = createAccessToken(user._id);
+    const refreshToken = createRefreshToken(user._id);
 
-    res.status(200).json({ user: user._id });
+    await User.findByIdAndUpdate(user._id, { refreshToken });
+
+    res.cookie("jwt", refreshToken, cookieOptions);
+
+    res.status(200).json({ user: user._id, accessToken });
   } catch (error) {
     console.log(`Error occurred while user tried to log in: ${error}`);
     res.status(500).json({ error: error.message });
@@ -43,15 +47,63 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("http://localhost:3001/bookmark")
+  try {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204);
+
+    const refreshToken = cookies.jwt;
+
+    const user = await User.findOne({ refreshToken });
+    if (!user) {
+      res.clearCookie("jwt", cookieOptions);
+      return res.sendStatus(403);
+    }
+
+    await User.findByIdAndUpdate(user._id, { refreshToken: "" });
+    res.clearCookie("jwt", cookieOptions);
+    res.sendStatus(204)
+  } catch (error) {
+    console.log(`Error occurred while logout the user: ${error}`);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const refreshJWT = async (req, res) => {
+  try {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(401);
+    console.log(cookies.jwt);
+
+    const refreshToken = cookies.jwt;
+
+    const user = await User.findOne({ refreshToken });
+    if (!user) return res.sendStatus(403);
+
+    jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error, decoded) => {
+      if (error || user._id !== decoded._id) return res.sendStatus(403);
+
+      const accessToken = createAccessToken(decoded._id);
+      res.status(200).json({ accessToken });
+    });
+  } catch (error) {
+    console.log(`Error occurred while refreshing a JWT token: ${error}`);
+    res.status(500).json({ error: error.message });
+  }
 };
 
 // Utility
-function createJWT(id) {
+function createAccessToken(id) {
   const payload = { id };
   const secret = ACCESS_TOKEN_SECRET;
-  const options = { expiresIn: MAX_AGE };
+  const options = { expiresIn: "30s" };
+
+  return jwt.sign(payload, secret, options);
+}
+
+function createRefreshToken(id) {
+  const payload = { id };
+  const secret = REFRESH_TOKEN_SECRET;
+  const options = { expiresIn: "1d" };
 
   return jwt.sign(payload, secret, options);
 }
@@ -60,4 +112,5 @@ module.exports = {
   signupUser,
   loginUser,
   logoutUser,
+  refreshJWT,
 };

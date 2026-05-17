@@ -17,6 +17,10 @@ const UserModel = new mongoose.Schema(
       type: String,
       required: [true, "Password cant be empty"],
     },
+    refreshToken: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,
