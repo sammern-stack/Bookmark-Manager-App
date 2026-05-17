@@ -4,7 +4,6 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 const authJWT = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  console.log(`authHeader: ${authHeader}`);
   if (!authHeader) return res.sendStatus(401); // Bearer token
 
   const token = authHeader.split(" ")[1];
