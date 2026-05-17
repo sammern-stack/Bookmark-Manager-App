@@ -11,13 +11,12 @@ const {
 
 const { authJWT } = require("../middleware/auth.middleware");
 
-router.route("/")
-  .get(getBookmarks)
-  .post(createBookmark)
+router.route("/").get(getBookmarks).post(authJWT, createBookmark);
 
-router.route("/:id")
+router
+  .route("/:id")
   .get(authJWT, getBookmarkById)
-  .put(updateBookmark)
-  .delete(deleteBookmark)
+  .put(authJWT, updateBookmark)
+  .delete(authJWT, deleteBookmark);
 
 module.exports = router;
