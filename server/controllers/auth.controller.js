@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const MAX_AGE = 3 * 24 * 60 * 60; // 3 days in seconds
 
 const signupUser = async (req, res) => {
@@ -50,7 +50,7 @@ const logoutUser = async (req, res) => {
 // Utility
 function createJWT(id) {
   const payload = { id };
-  const secret = JWT_SECRET;
+  const secret = ACCESS_TOKEN_SECRET;
   const options = { expiresIn: MAX_AGE };
 
   return jwt.sign(payload, secret, options);

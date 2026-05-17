@@ -14,7 +14,7 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(require("./config/cors.json")));
+app.use(cors(require("./config/corsOptions")));
 app.use(cookieParser());
 
 // Routes
