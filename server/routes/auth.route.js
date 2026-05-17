@@ -11,6 +11,6 @@ const {
 router.post("/signup", signupUser);
 router.post("/login", loginUser);
 router.get("/logout", logoutUser);
-router.get("/refresh", refreshJWT);
+router.post("/refresh", refreshJWT);
 
 module.exports = router;
