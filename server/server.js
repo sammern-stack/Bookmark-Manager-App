@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const { authJWT } = require("./middleware/auth.middleware");
 
 // Environmental Variables
 dotenv.config();
@@ -18,8 +19,11 @@ app.use(cors(require("./config/corsOptions")));
 app.use(cookieParser());
 
 // Routes
-app.use("/bookmark", require("./routes/bookmark.route"));
 app.use("/auth", require("./routes/auth.route"));
+
+// Routes require authentication
+app.use(authJWT);
+app.use("/bookmark", require("./routes/bookmark.route"));
 app.use("/user", require("./routes/user.route"));
 
 // Connect to MongoDB and initialize the server
