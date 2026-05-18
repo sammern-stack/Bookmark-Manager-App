@@ -1,7 +1,26 @@
 import axios from "axios";
+import type { AxiosError, InternalAxiosRequestConfig } from "axios";
 
-let accessToken = false;
-export const setAccessToken = (token) => (accessToken = token);
+// Extend Axios config to support custom properties
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  requireAuth?: boolean;
+  _retry?: boolean;
+}
+
+interface ApiSuccessResponse<T = unknown> {
+  ok: true;
+  data: T;
+}
+
+interface ApiErrorResponse {
+  ok: false;
+  error: string;
+}
+
+type ApiResponse<T = unknown> = ApiSuccessResponse<T> | ApiErrorResponse;
+
+let accessToken: string | null = null;
+export const setAccessToken = (token: string | null) => (accessToken = token);
 
 // Create an axios instance
 const api = axios.create({
@@ -13,7 +32,7 @@ const api = axios.create({
 });
 
 // Apply the authorization header on optional requests
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config: CustomAxiosRequestConfig) => {
   if (accessToken && config.requireAuth)
     config.headers.Authorization = `Bearer ${accessToken}`;
 
@@ -23,8 +42,8 @@ api.interceptors.request.use((config) => {
 // Refresh the access token if invalid
 api.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    const original = error.config;
+  async (error: AxiosError) => {
+    const original = error.config as CustomAxiosRequestConfig;
 
     // Conditions required to refresh token
     const is403 = error.response?.status === 403;
@@ -41,7 +60,7 @@ api.interceptors.response.use(
           method: "POST",
           url: "/auth/refresh",
           requireAuth: false,
-        });
+        } as CustomAxiosRequestConfig);
         setAccessToken(res.data.accessToken);
         original.headers.Authorization = `Bearer ${res.data.accessToken}`;
 
@@ -54,7 +73,7 @@ api.interceptors.response.use(
       }
     }
 
-    // If now token was passed redirect the user to log in
+    // If no token was passed redirect the user to log in
     const is401 = error.response?.status === 401;
     if (is401) window.location.href = "/login";
 
@@ -64,20 +83,31 @@ api.interceptors.response.use(
 );
 
 // Utility: Generic API call function with error handling
-export const apiCall = async (method, url, data = null, requireAuth = true) => {
+export const apiCall = async <T = unknown>(
+  method: string,
+  url: string,
+  data: unknown = null,
+  requireAuth: boolean = true,
+): Promise<ApiResponse<T>> => {
   // Attach data as body or query params depending on method
   const isGET = method.toUpperCase() === "GET";
   const dataConfig = data ? (isGET ? { params: data } : { data }) : {};
 
   try {
-    const res = await api({ method, url, requireAuth, ...dataConfig });
-    return { ok: true, data: res.data };
+    const res = await api({
+      method,
+      url,
+      requireAuth,
+      ...dataConfig,
+    } as CustomAxiosRequestConfig);
+    return { ok: true, data: res.data as T };
   } catch (err) {
-    console.error(`Error during API call to ${url}:`, err);
+    const error = err as AxiosError<{ message: string }>;
+    console.error(`Error during API call to ${url}:`, error);
     return {
       ok: false,
       error:
-        err.response?.data?.message ||
+        error.response?.data?.message ||
         `An error occurred while making API call to ${url}.`,
     };
   }
