@@ -7,6 +7,50 @@
   // Red
   --red-600: #fd4740;
   --red-800: #cb0a04;
+
+  // Typography
+  // font: font-weight font-size/line-height font-family
+  --text-preset-1: 700 24px/140% "Manrope", sans-serif;
+  --text-preset-2: 700 20px/120% "Manrope", sans-serif;
+  --text-preset-2-semi: 600 20px/120% "Manrope", sans-serif;
+  --text-preset-3: 600 16px/140% "Manrope", sans-serif;
+  --text-preset-3-medium: 500 16px/130% "Manrope", sans-serif;
+  --text-preset-4: 600 14px/140% "Manrope", sans-serif;
+  --text-preset-4-medium: 500 14px/150% "Manrope", sans-serif;
+  --text-preset-5: 500 12px/140% "Manrope", sans-serif;
+
+  // Spacing
+  --spacing-0: 0;
+  --spacing-025: 2px;
+  --spacing-050: 4px;
+  --spacing-075: 6px;
+  --spacing-100: 8px;
+  --spacing-125: 10px;
+  --spacing-150: 12px;
+  --spacing-200: 16px;
+  --spacing-250: 20px;
+  --spacing-300: 24px;
+  --spacing-400: 32px;
+  --spacing-500: 40px;
+  --spacing-600: 48px;
+  --spacing-800: 64px;
+  --spacing-1000: 80px;
+  --spacing-1200: 96px;
+  --spacing-1400: 112px;
+  --spacing-1600: 128px;
+  --spacing-1800: 140px;
+
+  // Border Radius
+  --radius-0: 0;
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-full: 999px;
 }
 
 // ─── Light Mode ───────────────────────────────────────────────
