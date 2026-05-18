@@ -1,23 +1,6 @@
 import axios from "axios";
-import type { AxiosError, InternalAxiosRequestConfig } from "axios";
-
-// Extend Axios config to support custom properties
-interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
-  requireAuth?: boolean;
-  _retry?: boolean;
-}
-
-interface ApiSuccessResponse<T = unknown> {
-  ok: true;
-  data: T;
-}
-
-interface ApiErrorResponse {
-  ok: false;
-  error: string;
-}
-
-type ApiResponse<T = unknown> = ApiSuccessResponse<T> | ApiErrorResponse;
+import type { AxiosError } from "axios";
+import type { CustomAxiosRequestConfig, ApiResponse } from "../types"
 
 let accessToken: string | null = null;
 export const setAccessToken = (token: string | null) => (accessToken = token);

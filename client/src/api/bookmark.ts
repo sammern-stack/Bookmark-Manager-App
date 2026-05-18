@@ -1,15 +1,5 @@
 import { apiCall } from "./utils";
-
-type Bookmark = {
-  title: string;
-  url: string;
-  favicon: string;
-  description: string;
-  tags: Array<string>;
-  pinned: boolean;
-  isArchived: boolean;
-  visitCount: number;
-};
+import type { Bookmark } from "../types"
 
 export const getBookmarks = async () =>
   await apiCall("GET", "/bookmark", null, false);

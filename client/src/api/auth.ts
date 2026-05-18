@@ -1,15 +1,5 @@
 import { apiCall } from "./utils";
-
-type User = {
-  email: string;
-  password: string;
-};
-
-type NewUser = {
-  username: string;
-  email: string;
-  password: string;
-};
+import type { User, NewUser } from "../types"
 
 export const signupUser = async (data: NewUser) =>
   await apiCall<NewUser>("POST", "/auth/signup", data, false);
