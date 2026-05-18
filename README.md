@@ -6,3 +6,4 @@ A minimal bookmark manager showcasing my full‑stack workflow — from API desi
 A list of links i used to help me learn and complete the project
 
 - [JWT Auth](https://www.youtube.com/watch?v=SnoAwLP1a-0&list=PL4cUxeGkcC9iqqESP8335DA5cRFp8loyp&index=1)
+- [JWT Auth 2](https://youtu.be/f2EqECiTBL8?si=F-6jaMwvaPbe5QV4) [2:02:13 - 5:09:20]
