@@ -1,0 +1,33 @@
+// ─── Shared (theme-independent) ───────────────────────────────
+:root {
+  // Teal
+  --teal-700: #014745;
+  --teal-800: #013c3b;
+
+  // Red
+  --red-600: #fd4740;
+  --red-800: #cb0a04;
+}
+
+// ─── Light Mode ───────────────────────────────────────────────
+:root[data-theme="light"] {
+  --neutral-900: #051513;
+  --neutral-800: #4c5c59;
+  --neutral-500: #899492;
+  --neutral-400: #c0cfcc;
+  --neutral-300: #dde9e7;
+  --neutral-100: #e8f0ef;
+  --neutral-0: #ffffff;
+}
+
+// ─── Dark Mode ────────────────────────────────────────────────
+:root[data-theme="dark"] {
+  --neutral-900: #001414;
+  --neutral-800: #001f1f;
+  --neutral-600: #002e2d;
+  --neutral-500: #004241;
+  --neutral-400: #004746;
+  --neutral-300: #00706e;
+  --neutral-100: #b1b9b9;
+  --neutral-0: #ffffff;
+}
