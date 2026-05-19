@@ -11,6 +11,12 @@ export type NewUser = {
   password: string;
 };
 
+export type ResponseUser = {
+  id: string,
+  username: string,
+  email: string
+}
+
 export type Bookmark = {
   title: string;
   url: string;
@@ -38,3 +44,8 @@ export interface ApiErrorResponse {
 }
 
 export type ApiResponse<T = unknown> = ApiSuccessResponse<T> | ApiErrorResponse;
+
+export type JWTrefresh = {
+  accessToken: string,
+  user: ResponseUser
+}
