@@ -58,7 +58,8 @@ api.interceptors.response.use(
 
     // If no token was passed redirect the user to log in
     const is401 = error.response?.status === 401;
-    if (is401) window.location.href = "/login";
+    const isRefreshEndpoint = original.url === "/auth/refresh";
+    if (is401 && !isRefreshEndpoint) window.location.href = "/login";
 
     // Throw the error outside the interceptor to flow through the next handler
     return Promise.reject(error);

@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useAuthStore } from "./stores";
 import { ProtectedRoute } from "./routes";
 
 import {
@@ -13,6 +15,12 @@ import {
 import "./App.scss";
 
 export default function App() {
+  const checkAuth = useAuthStore((s) => s.checkAuth);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   return (
     <>
       <BrowserRouter>
