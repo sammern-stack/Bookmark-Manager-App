@@ -1,0 +1,36 @@
+.button {
+  background: var(--teal-700);
+  padding: 12px 16px;
+  border-radius: var(--radius-8);
+  box-shadow: var(--button-shadow);
+  font: var(--text-preset-3);
+  color: var(--neutral-0);
+  position: relative;
+
+  &:hover {
+    background: var(--teal-800);
+  }
+
+  // Linear border provided by AI
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px; /* border thickness */
+    border-radius: inherit;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
