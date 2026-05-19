@@ -34,6 +34,18 @@ export const useAuthStore = create<AuthTypes>((set) => ({
   },
 
   checkAuth: async () => {
+    const publicRoutes = [
+      "/forgot-password",
+      "/reset-password",
+      "/login",
+      "/register",
+    ];
+
+    if (publicRoutes.includes(window.location.pathname)) {
+      set({ isLoading: false });
+      return;
+    }
+
     const res = await refreshJWT();
     if (res.ok) {
       setAccessToken(res.data.accessToken);
