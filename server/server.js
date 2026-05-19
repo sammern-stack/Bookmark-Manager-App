@@ -20,11 +20,11 @@ app.use(cookieParser());
 
 // Routes
 app.use("/auth", require("./routes/auth.route"));
+app.use("/user", require("./routes/user.route"));
 
 // Routes require authentication
 app.use(authJWT);
 app.use("/bookmark", require("./routes/bookmark.route"));
-app.use("/user", require("./routes/user.route"));
 
 // Connect to MongoDB and initialize the server
 mongoose

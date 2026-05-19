@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getUsers,
   getUserById,
+  findUserByEmail,
   updateUser,
   deleteUser,
 } = require("../controllers/user.controller");

@@ -97,6 +97,7 @@ function isValidId(id) {
 module.exports = {
   getUsers,
   getUserById,
+  findUserByEmail,
   updateUser,
   deleteUser,
 };
