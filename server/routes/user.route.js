@@ -8,9 +8,10 @@ const {
   deleteUser,
 } = require("../controllers/user.controller");
 
-router.get("/", getUsers);
-router.get("/:id", getUserById);
+router.route("/").get(getUsers);
 
-router.delete("/:id", deleteUser);
+router.route("/email/:email").get(findUserByEmail);
+
+router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
 
 module.exports = router;

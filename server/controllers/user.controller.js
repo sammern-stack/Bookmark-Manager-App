@@ -28,7 +28,46 @@ const getUserById = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {};
+const findUserByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const find = await User.findOne({ email });
+    if (!find) res.status(404).json({ found: false });
+
+    res.status(200).json({ found: true, user: find._id });
+  } catch (error) {
+    console.log(`Error occurred while finding user: ${error}`);
+    res.status(500).json(error);
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, email, password } = req.body;
+
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (username) user.username = username;
+    if (email) user.email = email;
+    if (password) user.password = password;
+
+    await user.save();
+
+    const updatedUser = {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    };
+
+    res.status(200).json({ message: "User updated", user: updatedUser });
+  } catch (error) {
+    console.log(`Error occurred while updating user: ${error}`);
+    res.status(500).json(error);
+  }
+};
 
 const deleteUser = async (req, res) => {
   try {
