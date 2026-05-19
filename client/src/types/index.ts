@@ -11,11 +11,13 @@ export type NewUser = {
   password: string;
 };
 
+export type UpdateUser = Partial<NewUser>;
+
 export type ResponseUser = {
-  id: string,
-  username: string,
-  email: string
-}
+  id: string;
+  username: string;
+  email: string;
+};
 
 export type Bookmark = {
   title: string;
@@ -46,13 +48,13 @@ export interface ApiErrorResponse {
 export type ApiResponse<T = unknown> = ApiSuccessResponse<T> | ApiErrorResponse;
 
 export type JWTrefresh = {
-  accessToken: string,
-  user: ResponseUser
-}
+  accessToken: string;
+  user: ResponseUser;
+};
 
-export type Theme = "light" | "dark"
+export type Theme = "light" | "dark";
 
 export interface ThemeState {
-  theme: Theme,
+  theme: Theme;
   toggleTheme: () => void;
 }
