@@ -1,7 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useSignupForm } from "../hooks/useSignupForm";
 import { Button } from "../../../components";
-import "../styles.scss";
 
 export default function LoginForm() {
   const { initialValues, validationSchema, onSubmit } = useSignupForm();

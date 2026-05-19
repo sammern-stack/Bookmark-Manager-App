@@ -1,7 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useForgotPswdForm } from "../hooks/useForgotPswdForm";
 import { Button } from "../../../components";
-import "../styles.scss";
 
 export default function LoginForm() {
   const { initialValues, validationSchema, onSubmit } = useForgotPswdForm();
