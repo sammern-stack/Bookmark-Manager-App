@@ -17,7 +17,7 @@ export default function Login() {
       <div className="form-page__footer">
         <div className="form-page__footer-row">
           <span>Forgot password?</span>
-          <span>Reset it</span>
+          <span onClick={() => navigate("/forgot-password")}>Reset it</span>
         </div>
         <div className="form-page__footer-row">
           <span>Don't have an account?</span>

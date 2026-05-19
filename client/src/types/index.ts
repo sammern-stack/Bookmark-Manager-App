@@ -11,7 +11,14 @@ export type NewUser = {
   password: string;
 };
 
-export type UpdateUser = Partial<NewUser>;
+export type UpdateUser = Partial<NewUser> & {
+  confirmPassword?: string;
+};
+
+export type FoundUser = {
+  found: boolean;
+  user: string;
+};
 
 export type ResponseUser = {
   id: string;

@@ -32,9 +32,5 @@ export const useLoginForm = () => {
     navigate("/");
   };
 
-  return {
-    initialValues,
-    validationSchema,
-    onSubmit,
-  };
+  return { initialValues, validationSchema, onSubmit };
 };

@@ -34,9 +34,5 @@ export const useSignupForm = () => {
     navigate("/login");
   };
 
-  return {
-    initialValues,
-    validationSchema,
-    onSubmit,
-  };
+  return { initialValues, validationSchema, onSubmit };
 };
