@@ -1,3 +1,7 @@
+// Import Manrope
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 // ─── Shared (theme-independent) ───────────────────────────────
 :root {
   // Teal
@@ -51,6 +55,9 @@
   --radius-20: 20px;
   --radius-24: 24px;
   --radius-full: 999px;
+
+  // Box shadows
+  --button-shadow: 0 0 0 1px rgb(34 38 39 / 0.12);
 }
 
 // ─── Light Mode ───────────────────────────────────────────────
@@ -62,6 +69,13 @@
   --neutral-300: #dde9e7;
   --neutral-100: #e8f0ef;
   --neutral-0: #ffffff;
+
+  --main-bg: var(--neutral-100);
+  --form-bg: var(--neutral-0);
+  --text-color-primary: var(--neutral-900);
+  --text-color-secondary: var(--neutral-800);
+  --input-bg: var(--neutral-0);
+  --input-outline: var(--neutral-500);
 }
 
 // ─── Dark Mode ────────────────────────────────────────────────
@@ -74,4 +88,11 @@
   --neutral-300: #00706e;
   --neutral-100: #b1b9b9;
   --neutral-0: #ffffff;
+
+  --main-bg: var(--neutral-900);
+  --form-bg: var(--neutral-800);
+  --text-color-primary: var(--neutral-0);
+  --text-color-secondary: var(--neutral-100);
+  --input-bg: var(--neutral-600);
+  --input-outline: var(--neutral-300);
 }
