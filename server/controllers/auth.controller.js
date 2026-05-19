@@ -16,10 +16,16 @@ const signupUser = async (req, res) => {
 
     const refreshToken = createRefreshToken(newUser._id);
 
+    const signedUpUser = {
+      id: newUser._id,
+      username: newUser.username,
+      email: newUser.email,
+    };
+
     res.cookie("jwt", refreshToken, cookieOptions);
     res
       .status(201)
-      .json({ message: "User signup successfully", user: newUser._id });
+      .json({ message: "User signup successfully", user: signedUpUser });
   } catch (error) {
     console.log(`Error occurred while user tried to sign up: ${error}`);
     res.status(500).json(error);
@@ -39,7 +45,13 @@ const loginUser = async (req, res) => {
 
     res.cookie("jwt", refreshToken, cookieOptions);
 
-    res.status(200).json({ user: user._id, accessToken });
+    const loggedInUser = {
+      id: user._id,
+      email: user.email,
+      username: user.username,
+    };
+
+    res.status(200).json({ user: loggedInUser, accessToken });
   } catch (error) {
     console.log(`Error occurred while user tried to log in: ${error}`);
     res.status(500).json({ error: error.message });
@@ -61,7 +73,7 @@ const logoutUser = async (req, res) => {
 
     await User.findByIdAndUpdate(user._id, { refreshToken: "" });
     res.clearCookie("jwt", cookieOptions);
-    res.sendStatus(204)
+    res.sendStatus(204);
   } catch (error) {
     console.log(`Error occurred while logout the user: ${error}`);
     res.status(500).json({ error: error.message });
@@ -80,10 +92,18 @@ const refreshJWT = async (req, res) => {
     if (!user) return res.sendStatus(403);
 
     jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error, decoded) => {
-      if (error || user._id !== decoded._id) return res.sendStatus(403);
+      if (error || user._id.toString() !== decoded.id)
+        return res.sendStatus(403);
 
       const accessToken = createAccessToken(decoded._id);
-      res.status(200).json({ accessToken });
+
+      const foundUser = {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      };
+
+      res.status(200).json({ accessToken, user: foundUser });
     });
   } catch (error) {
     console.log(`Error occurred while refreshing a JWT token: ${error}`);
