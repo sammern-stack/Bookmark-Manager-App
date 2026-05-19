@@ -1,16 +1,20 @@
 import { create } from "zustand";
-import { signupUser, loginUser, logoutUser } from "../api/auth";
-import type { User, NewUser, ApiResponse } from "../types";
+import { setAccessToken } from "../api/utils";
+import { signupUser, loginUser, logoutUser, refreshJWT } from "../api/auth";
+import type { User, NewUser, ApiResponse, ResponseUser } from "../types";
 
 interface AuthTypes {
-  user: User | null;
-  login: (data: User) => Promise<ApiResponse<User>>;
+  user: ResponseUser | null;
+  isLoading: boolean;
+  login: (data: User) => Promise<ApiResponse<ResponseUser>>;
   logout: () => Promise<void>;
-  signup: (data: NewUser) => Promise<ApiResponse<NewUser>>;
+  signup: (data: NewUser) => Promise<ApiResponse<ResponseUser>>;
+  checkAuth: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthTypes>((set) => ({
   user: null,
+  isLoading: true,
 
   login: async (data) => {
     const res = await loginUser(data);
@@ -27,5 +31,14 @@ export const useAuthStore = create<AuthTypes>((set) => ({
     const res = await signupUser(data);
     if (res.ok) set({ user: res.data });
     return res;
+  },
+
+  checkAuth: async () => {
+    const res = await refreshJWT();
+    if (res.ok) {
+      setAccessToken(res.data.accessToken);
+      set({ user: res.data.user });
+    }
+    set({ isLoading: false });
   },
 }));
