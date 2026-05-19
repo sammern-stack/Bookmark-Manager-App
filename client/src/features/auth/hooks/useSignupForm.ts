@@ -31,7 +31,7 @@ export const useSignupForm = () => {
       return;
     }
 
-    navigate("/");
+    navigate("/login");
   };
 
   return {

@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { Logo } from "../../components";
 import { LoginForm } from "../../features/auth";
 import "./Auth.scss";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   return (
     <div className="form-page">
       <Logo />
@@ -18,7 +21,7 @@ export default function Login() {
         </div>
         <div className="form-page__footer-row">
           <span>Don't have an account?</span>
-          <span>Sign up</span>
+          <span onClick={() => navigate("/signup")}>Sign up</span>
         </div>
       </div>
     </div>
