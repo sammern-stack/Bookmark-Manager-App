@@ -46,7 +46,24 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
-        <div className="sidebar__tags">Tags</div>
+        <div className="sidebar__tags">
+          <div className="sidebar__tags-title">TAGS</div>
+          <div className="sidebar__tags-list">
+            {[...tags.entries()]
+              .sort((a, b) => a[0].localeCompare(b[0]))
+              .map(([tag, count]) => (
+                <div className="sidebar__tags-content">
+                  <div key={tag} className="sidebar__tags-item">
+                    <label>
+                      <input type="checkbox" />
+                      {tag}
+                    </label>
+                    <span className="sidebar__tags-count">{count}</span>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
       </div>
     </div>
   );

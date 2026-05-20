@@ -4,13 +4,13 @@ import type { Bookmark } from "../../../types";
 
 interface BookmarkStore {
   bookmarks: Bookmark[];
-  tags: string[];
+  tags: Map<string, number>;
   setBookmarks: () => Promise<void>;
 }
 
 export const useBookmarkStore = create<BookmarkStore>((set) => ({
   bookmarks: [],
-  tags: [],
+  tags: new Map(),
 
   setBookmarks: async () => {
     const res = await getBookmarks();
@@ -21,7 +21,12 @@ export const useBookmarkStore = create<BookmarkStore>((set) => ({
     }
 
     const bookmarks = res.data;
-    const tags = [...new Set(bookmarks.flatMap((b) => b.tags ?? []))];
+    const tags = bookmarks
+      .flatMap((b) => b.tags ?? [])
+      .reduce((acc, tag) => {
+        acc.set(tag, (acc.get(tag) ?? 0) + 1);
+        return acc;
+      }, new Map<string, number>());
 
     set({ bookmarks, tags });
   },

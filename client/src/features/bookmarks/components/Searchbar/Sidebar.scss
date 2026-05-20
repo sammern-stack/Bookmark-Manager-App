@@ -1,6 +1,7 @@
 .sidebar {
+  display: flex;
+  flex-direction: column;
   min-height: 0;
-  overflow-y: auto;
   width: 296px;
   background: var(--secondary-bg);
   border-right: 1px solid var(--sidebar-border-color);
@@ -11,6 +12,10 @@
 
   &__navigation {
     padding: 0 16px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
   }
 
   &__nav-item {
@@ -30,5 +35,34 @@
       color: var(--text-color-primary);
       background: var(--main-bg);
     }
+  }
+
+  &__tags {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__tags-content {
+    padding: 2px 0;
+  }
+
+  &__tags-item {
+    padding: 8px 12px;
+    border-radius: var(--radius-6);
+    display: flex;
+    justify-content: space-between;
+    font: var(--text-preset-3);
+    color: var(--text-color-secondary);
+  }
+
+  &__tags-count {
+    border-radius: 999px;
+    background: var(--neutral-100);
+    padding: 2px 8px;
   }
 }
