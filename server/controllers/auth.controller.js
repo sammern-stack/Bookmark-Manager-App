@@ -95,7 +95,7 @@ const refreshJWT = async (req, res) => {
       if (error || user._id.toString() !== decoded.id)
         return res.sendStatus(403);
 
-      const accessToken = createAccessToken(decoded._id);
+      const accessToken = createAccessToken(decoded.id);
 
       const foundUser = {
         id: user._id,
