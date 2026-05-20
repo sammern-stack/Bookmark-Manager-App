@@ -1,41 +1,32 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import { useResetPswdForm } from "../hooks/useResetPswdForm";
 import { Button } from "../../../components";
+import FormField from "./FormField";
 
 export default function LoginForm() {
   const { initialValues, validationSchema, onSubmit } = useResetPswdForm();
 
   return (
-    <>
-      <Formik {...{ initialValues, validationSchema, onSubmit }}>
-        {({ isSubmitting }) => (
-          <Form className="form-page__form">
-            <div className="form-page__form-field">
-              <div>
-                <label htmlFor="password">Password</label>
-                <Field name="password" id="password" type="password" />
-              </div>
-              <ErrorMessage name="confirmPassword" component="p" className="helper" />
-            </div>
+    <Formik {...{ initialValues, validationSchema, onSubmit }}>
+      {({ isSubmitting }) => (
+        <Form className="form-page__form">
+          <FormField
+            type="password"
+            errMsg="confirmPassword"
+            label="Password"
+          />
 
-            <div className="form-page__form-field">
-              <div>
-                <label htmlFor="confirmPassword">Confirm password</label>
-                <Field
-                  name="confirmPassword"
-                  id="confirmPassword"
-                  type="password"
-                />
-              </div>
-              <ErrorMessage name="confirmPassword" component="p" className="helper" />
-            </div>
+          <FormField
+            type="confirmPassword"
+            errMsg="confirmPassword"
+            label="Confirm password"
+          />
 
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Resetting password..." : "Reset password"}
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    </>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Resetting password..." : "Reset password"}
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
 }

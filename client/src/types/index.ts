@@ -65,3 +65,9 @@ export interface ThemeState {
   theme: Theme;
   toggleTheme: () => void;
 }
+
+export interface FormFieldProps {
+  type: string;
+  errMsg: string;
+  label: string;
+}
