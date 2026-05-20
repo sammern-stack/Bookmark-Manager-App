@@ -21,9 +21,12 @@ export type FoundUser = {
 };
 
 export type ResponseUser = {
-  id: string;
-  username: string;
-  email: string;
+  user: {
+    id: string;
+    username: string;
+    email: string;
+  };
+  accessToken: string
 };
 
 export type Bookmark = {
@@ -56,7 +59,7 @@ export type ApiResponse<T = unknown> = ApiSuccessResponse<T> | ApiErrorResponse;
 
 export type JWTrefresh = {
   accessToken: string;
-  user: ResponseUser;
+  user: ResponseUser["user"];
 };
 
 export type Theme = "light" | "dark";

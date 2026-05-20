@@ -2,7 +2,7 @@ import { apiCall } from "./utils";
 import type { Bookmark } from "../types"
 
 export const getBookmarks = async () =>
-  await apiCall("GET", "/bookmark", null, false);
+  await apiCall<Bookmark[]>("GET", "/bookmark", null, true);
 
 export const getBookmarkById = async (id: string) =>
   await apiCall("GET", `/bookmark/${id}`, null, true);

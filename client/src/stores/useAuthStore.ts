@@ -4,7 +4,7 @@ import { signupUser, loginUser, logoutUser, refreshJWT } from "../api/auth";
 import type { User, NewUser, ApiResponse, ResponseUser } from "../types";
 
 interface AuthTypes {
-  user: ResponseUser | null;
+  user: ResponseUser["user"] | null;
   isLoading: boolean;
   login: (data: User) => Promise<ApiResponse<ResponseUser>>;
   logout: () => Promise<void>;
@@ -18,7 +18,10 @@ export const useAuthStore = create<AuthTypes>((set) => ({
 
   login: async (data) => {
     const res = await loginUser(data);
-    if (res.ok) set({ user: res.data });
+    if (res.ok) {
+      setAccessToken(res.data.accessToken);
+      set({ user: res.data.user });
+    }
     return res;
   },
 
@@ -29,7 +32,7 @@ export const useAuthStore = create<AuthTypes>((set) => ({
 
   signup: async (data) => {
     const res = await signupUser(data);
-    if (res.ok) set({ user: res.data });
+    if (res.ok) set({ user: res.data.user });
     return res;
   },
 
