@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { authJWT } = require("./middleware/auth.middleware");
 
 // Environmental Variables
 dotenv.config();
@@ -23,15 +22,16 @@ app.use("/auth", require("./routes/auth.route"));
 app.use("/user", require("./routes/user.route"));
 
 // Routes require authentication
+const { authJWT } = require("./middleware/auth.middleware");
 app.use(authJWT);
 app.use("/bookmark", require("./routes/bookmark.route"));
 
 // Connect to MongoDB and initialize the server
 mongoose
-  .connect(MONGODB_URL)
-  .then(() => {
-    console.log("Mongodb has connected successfully");
-
+.connect(MONGODB_URL)
+.then(() => {
+  console.log("Mongodb has connected successfully");
+  
     app.listen(PORT, () => {
       console.log(`Server is running at: http://localhost:${PORT}`);
     });
