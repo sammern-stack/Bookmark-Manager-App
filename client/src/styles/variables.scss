@@ -71,11 +71,13 @@
   --neutral-0: #ffffff;
 
   --main-bg: var(--neutral-100);
+  --secondary-bg: var(--neutral-0);
   --form-bg: var(--neutral-0);
   --text-color-primary: var(--neutral-900);
   --text-color-secondary: var(--neutral-800);
   --input-bg: var(--neutral-0);
   --input-outline: var(--neutral-500);
+  --sidebar-border-color: var(--neutral-300);
 }
 
 // ─── Dark Mode ────────────────────────────────────────────────
@@ -90,9 +92,11 @@
   --neutral-0: #ffffff;
 
   --main-bg: var(--neutral-900);
+  --secondary-bg: var(--neutral-800);
   --form-bg: var(--neutral-800);
   --text-color-primary: var(--neutral-0);
   --text-color-secondary: var(--neutral-100);
   --input-bg: var(--neutral-600);
   --input-outline: var(--neutral-300);
+  --sidebar-border-color: var(--neutral-500);
 }

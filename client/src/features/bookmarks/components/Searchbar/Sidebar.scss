@@ -1,0 +1,34 @@
+.sidebar {
+  min-height: 0;
+  overflow-y: auto;
+  width: 296px;
+  background: var(--secondary-bg);
+  border-right: 1px solid var(--sidebar-border-color);
+
+  &__header {
+    padding: 20px 20px 10px;
+  }
+
+  &__navigation {
+    padding: 0 16px 16px 20px;
+  }
+
+  &__nav-item {
+    padding: 2px 0;
+  }
+
+  &__nav-content {
+    display: flex;
+    gap: 8px;
+    font: var(--text-preset-3);
+    color: var(--text-color-secondary);
+    border-radius: var(--radius-6);
+    padding: 8px 12px;
+    cursor: pointer;
+
+    &--active {
+      color: var(--text-color-primary);
+      background: var(--main-bg);
+    }
+  }
+}

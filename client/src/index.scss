@@ -1,4 +1,10 @@
 // Global Styles
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 body {
   position: relative;
   background: var(--main-bg);
