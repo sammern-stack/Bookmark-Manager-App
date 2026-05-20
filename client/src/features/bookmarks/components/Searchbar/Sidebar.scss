@@ -58,6 +58,17 @@
     justify-content: space-between;
     font: var(--text-preset-3);
     color: var(--text-color-secondary);
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      input {
+        width: 16px;
+        height: 16px;
+      }
+    }
   }
 
   &__tags-count {

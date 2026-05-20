@@ -56,7 +56,7 @@ export default function Sidebar() {
                   <div key={tag} className="sidebar__tags-item">
                     <label>
                       <input type="checkbox" />
-                      {tag}
+                      <span>{tag}</span>
                     </label>
                     <span className="sidebar__tags-count">{count}</span>
                   </div>
